@@ -19,19 +19,39 @@ pub extern "C" fn _test() -> i8 {
 
 pub fn handle_dll_upgrading(path: String, platform: String) -> i8 {
     // Getting Path and making the full path.
-    let name = "/(new)LunTool.";
-    let url = "https://github.com/LunSystems/LunTool/releases/download/v1.0.0/LunTool.dll";
+    let name = format!("{}/libLunTool", path);
+    println!("Platform: {}", platform);
+    let url = "https://github.com/ChristianHiland/LunTool/releases/download/Test/libLunTool";
     let path = format!("{}/DLLs/{}{}", path, platform, name);
     let mut final_path = String::new();
+    let mut filename = "woof".to_string();
+    let mut final_url  = String::new();
     if platform == "windows" {
+        let url2 = url;
+        filename = format!("{}.dll", name);
+        final_url = format!("{}.dll", url2);
         final_path = format!("{}.dll", path);
     } else if platform == "linux" {
+        let url2 = url;
+        filename = format!("{}.so", name);
+        final_url = format!("{}.so", url2);
         final_path = format!("{}.so", path);
     }
     // Downloading a file
-    let final_cmd = format!("curl -o {} {}", final_path, url);
-    let mut command = Command::new(final_cmd);
-    command.status().expect("Failed to execute command");
+    let status = Command::new("curl")
+        .arg("-o")
+        .arg(filename)
+        .arg(final_url)
+        .status();
+    match status {
+        Ok(result) => {
+            println!("{}", result);
+        }
+        
+        Err(e) => {
+            println!("{}", e);
+        }
+    }
     0
 }
 
