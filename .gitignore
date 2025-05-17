@@ -1,1 +1,15 @@
-/target
+target/release/.fingerprint
+target/release/incremental
+target/release/examples
+target/.rustc_info.json
+target/release/build
+target/CACHEDIR.TAG
+target/release/deps
+target/debug
+/.idea
+
+Cargo.lock
+new_libLunTool.so
+libLunTool.rlib
+libLunTool.d
+.cargo-lock
