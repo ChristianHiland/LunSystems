@@ -1,0 +1,7 @@
+{
+  "version": "v0.2.6",
+  "luntool": {
+    "c_funcs": ["_version", "__init", "_start", "_update", "_test", "_unload", "_update_libs"],
+    "rust_funcs": ["list_files", "create_folder", "delete_folder", "handle_dll_upgrading"]
+  }
+}
