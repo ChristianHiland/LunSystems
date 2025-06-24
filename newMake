@@ -1,54 +1,20 @@
 -include .config
 
-# The Kconfig tool for the menu interface.
+# The Kconfig tool for the menu interface
 KCONFIG_MCONF ?= kconfig-mconf
-# THe Kconfig file
+# The Kconfig file
 KCONFIG_FILE = Kconfig
 # Other Vars
 CURRENT_PATH := $(CURDIR)
 
-#
-# Config Condidtions 
-#
 
-# Define a variable to hold extra, conditional targets, and targets.
-EXTRA_TARGETS :=
-OUTPUT_TARGET :=
-LUNPACK_DEPND := DOWLOAD_IMPORTS UNPACK_IMPORTS
-
-ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
-	EXTRA_TARGETS += HowlingInstall
-endif
-
-ifeq ($(CONFIG_HOWLING_COMPILE), y)
-	EXTRA_TARGETS += Howling
-endif
-
-ifeq ($(CONFIG_LIB_HOWLING_COMPILE), y)
-	EXTRA_TARGETS += LibHowling
-endif
-
-ifeq ($(CONFIG_LIB_LUNTOOL_COMPILE), y)
-	EXTRA_TARGETS += LunTool
-endif
-
-ifeq ($(CONFIG_LTT_COMPILE_ENABLE), y)
-	EXTRA_TARGETS += LTT
-endif
-
-ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
-	OUTPUT_TARGET += LUNPACK_COMPILE
-endif
-
-EXTRA_TARGETS += LunSystems
-
-# Default target: make -j 4
+# Default target: build the Rust project
 all: $(EXTRA_TARGETS) $(OUTPUT_TARGET)
-	@echo "cleaning up build files, and any compile time made files..."
-	@sleep 3
+	@mkdir -p output/lib && mkdir -p output/bin
+	@echo "Cleaning up build files, and extra compile cache..."
 	@rm -rf output/lib/*.d
-	@echo "All files have been copied to 'output' folder."
-	@echo "Done!"
+	@echo "Done! All files have been copied to the 'output' folder"
+	
 
 
 # LunSystem Targets
@@ -74,12 +40,11 @@ LTT:
 	@echo "Compiling LTT"
 	@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/bin/
 
+
 # Lunpack Funcs
 
 DOWLOAD_IMPORTS:
 	@mkdir imports
-	@echo "Downloading software for Lunpack..."
-	@sleep 3
 	@echo "[INFO] Downloading Gzip..."
 	@cd imports && wget -v https://ftp.gnu.org/gnu/gzip/gzip-1.14.zip
 	@echo "[INFO] Downloading Cpio..."
@@ -100,8 +65,7 @@ LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@mv final.lunpack output/lunpack/ && cd src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
 	@echo "Compacted into 'output/lunpack'"
 
-
-z# Target to run the configuration menu
+# Target to run the configuration menu
 menuconfig:
 	@$(KCONFIG_MCONF) $(KCONFIG_FILE)
 	@echo "\nConfiguration saved in .config. Run 'make'"
