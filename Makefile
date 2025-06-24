@@ -87,7 +87,8 @@ UNPACK_IMPORTS:
 	@echo "[INFO] Unzipping Gzip..."
 	@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./configure
 	@cd imports/gzip-1.14/ && make -j 4
-	@cd imports && gzip -dv cpio-latest.tar.gz && tar -xf cpio-latest.tar
+	@cd imports && gzip -dv cpio-latest.tar.gz && tar -xf cpio-latest.tar && cdcpio-latest && ./configure
+	@cd imports/cpio-latest/ && make -j 4
 
 LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@echo "Compacting into a Lunpack..."
