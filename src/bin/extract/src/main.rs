@@ -17,7 +17,13 @@ fn main() {
 
     let status = Command::new("./tools/gzip")
         .arg("-dv")
-        .arg("final.cpio.gz")
+        .arg("tools/final.cpio.gz")
+        .status()
+        .expect("failed to execute process!");
+    println!("process 'mv' exited with: {}", status);
+    let status = Command::new("cpio")
+        .arg("-i")
+        .arg("tools/final.cpio")
         .status()
         .expect("failed to execute process!");
     println!("process 'mv' exited with: {}", status);

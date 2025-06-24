@@ -96,7 +96,7 @@ LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@mv final.cpio.gz final.lunpack
 	@mkdir -p output/lunpack/tools/
 	@cp imports/gzip-1.14/gzip $(CURRENT_PATH)/output/lunpack/tools/
-	@cp imports/cpio-latest/ $(CURRENT_PATH)/output/lunpack/tools/
+	@cp imports/cpio-2.15/ $(CURRENT_PATH)/output/lunpack/tools/
 	@mv final.lunpack output/lunpack/ && cd src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
 	@echo "Compacted into 'output/lunpack'"
 
