@@ -93,8 +93,8 @@ UNPACK_IMPORTS:
 
 LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@echo "Compacting into a Lunpack..."
-	@find output/ -depth -print0 | cpio -ovc | gzip -c > final.cpio.gz
-	@mv final.cpio.gz final.lunpack
+	@tar -czvf final.tar.gz output
+	@mv final.tar.gz final.lunpack
 	@mkdir -p output/lunpack/tools/
 	@cp imports/gzip-1.14/gzip $(CURRENT_PATH)/output/lunpack/tools/
 	@mv final.lunpack output/lunpack/ && cd src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
