@@ -25,6 +25,7 @@ menu "LunSystem Software"
         default n
         help
             This enables the LTT code to be compiled
+endmenu
 
 # Sub Menu For LunSystem Libaries.
 menu "LunSystem Libaries"
