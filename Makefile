@@ -12,7 +12,7 @@ CURRENT_PATH := $(CURDIR)
 #
 
 # Define a variable to hold extra, conditional targets, and targets.
-EXTRA_TARGETS := PRE_INIT
+EXTRA_TARGETS :=
 OUTPUT_TARGET :=
 LUNPACK_DEPND := DOWLOAD_IMPORTS UNPACK_IMPORTS
 
@@ -40,12 +40,11 @@ ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
 	OUTPUT_TARGET += LUNPACK_COMPILE
 endif
 
-PRE_INIT:
-	@mkdir -p output/lib && mkdir -p output/bin
 
 EXTRA_TARGETS += LunSystems
 # Default target: build the Rust project
 all: $(EXTRA_TARGETS) $(OUTPUT_TARGET)
+	@mkdir -p output/lib && mkdir -p output/bin
 	@echo "Cleaning up build files, and extra compile cache..."
 	@rm -rf output/lib/*.d
 	@echo "Done! All files have been copied to the 'output' folder"
