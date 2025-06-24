@@ -1,0 +1,52 @@
+# Main menu title
+mainmenu "LunSystem Build Menu"
+
+# Sub Menu For Howling OS Assets
+menu "Howling OS"
+    config HOWLING_INSTALL_COMPILE
+        bool "Howling Install"
+        default n
+        help
+            This enables the Howling Install code to be compiled
+            Note this is meant for ONLY HOWLING OS SYSTEMS.
+
+    config HOWLING_COMPILE
+        bool "Howling (Package Manager)"
+        default n
+        help
+            This enables the Howling code to be compiled
+            Note this is meant for ONLY HOWLING OS SYSTEMS.
+endmenu
+
+# Sub Menu For LunSystem Software.
+menu "LunSystem Software"
+    config LTT_COMPILE_ENABLE
+        bool "LTT (LunTool Terminal)"
+        default n
+        help
+            This enables the LTT code to be compiled
+
+# Sub Menu For LunSystem Libaries.
+menu "LunSystem Libaries"
+    config LIB_HOWLING_COMPILE
+        bool "Howling (Libary)"
+        default n
+        help
+            This enables the libHowling code to be compiled
+            Note this is meant for ONLY HOWLING OS SYSTEMS.
+
+    config LIB_LUNTOOL_COMPILE
+        bool "LunTool (Libary)"
+        default n
+        help
+            This enables the libLunTool code to be compiled.
+endmenu
+
+# Sub Menu For Target Options.
+menu "Target Options"
+    config COMPILE_INTO_LUNPACK
+        bool "Compile LunPack"
+        default n
+        help
+            This after compling the selected assets will package them into a LunPack Asset.
+endmenu
