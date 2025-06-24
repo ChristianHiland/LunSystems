@@ -14,7 +14,7 @@ CURRENT_PATH := $(CURDIR)
 # Define a variable to hold extra, conditional targets, and targets.
 EXTRA_TARGETS :=
 OUTPUT_TARGET :=
-LUNPACK_DEPND :=
+LUNPACK_DEPND := DOWLOAD_IMPORTS UNPACK_IMPORTS
 
 ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
 	EXTRA_TARGETS += HowlingInstall
@@ -42,14 +42,9 @@ endif
 
 
 EXTRA_TARGETS += LunSystems
-
-# Make folders
-output:
-	@mkdir -p output/lib && mkdir -p output/bin
-
 # Default target: build the Rust project
 all: $(EXTRA_TARGETS) $(OUTPUT_TARGET)
-	
+	@mkdir -p output/lib && mkdir -p output/bin
 	@echo "Cleaning up build files, and extra compile cache..."
 	@rm -rf output/lib/*.d
 	@echo "Done! All files have been copied to the 'output' folder"
@@ -90,9 +85,6 @@ UNPACK_IMPORTS:
 	@echo "[INFO] Unzipping Gzip..."
 	@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./confingure
 	@cd imports/gzip-1.14/ && make -j 4
-
-LUNPACK_DEPND += DOWLOAD_IMPORTS
-LUNPACK_DEPND += UNPACK_IMPORTS
 
 LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@echo "Compacting into a Lunpack..."
