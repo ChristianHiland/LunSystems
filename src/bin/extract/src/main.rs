@@ -6,7 +6,7 @@ fn main() {
         .arg("final.cpio.gz")
         .status()
         .expect("failed to execute process");
-    println!("process 'cp' exited with: {}", mv_cmd);
+    println!("process 'mv' exited with: {}", mv_cmd);
 
     let mv_cmd2 = Command::new("mv")
         .arg("final.cpio.gz")
@@ -20,11 +20,12 @@ fn main() {
         .arg("tools/final.cpio.gz")
         .status()
         .expect("failed to execute process!");
-    println!("process 'mv' exited with: {}", status);
+    println!("process 'gzip' exited with: {}", status);
     let status = Command::new("cpio")
-        .arg("-i")
+        .arg("-id")
+        .arg("<")
         .arg("tools/final.cpio")
         .status()
         .expect("failed to execute process!");
-    println!("process 'mv' exited with: {}", status);
+    println!("process 'cpio' exited with: {}", status);
 }
