@@ -101,7 +101,7 @@ LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@echo "Compacted into 'output/lunpack'"
 
 
-z# Target to run the configuration menu
+# Target to run the configuration menu
 menuconfig:
 	@$(KCONFIG_MCONF) $(KCONFIG_FILE)
 	@echo "\nConfiguration saved in .config. Run 'make'"
