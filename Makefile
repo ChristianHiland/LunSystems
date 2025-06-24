@@ -81,10 +81,13 @@ DOWLOAD_IMPORTS:
 	@mkdir imports
 	@echo "[INFO] Downloading Gzip..."
 	@cd imports && wget -v https://ftp.gnu.org/gnu/gzip/gzip-1.14.zip
+	@echo "[INFO] Downloading Cpio..."
+	@cd imports && wget -v https://ftp.gnu.org/gnu/cpio/cpio-latest.tar.gz
 UNPACK_IMPORTS:
 	@echo "[INFO] Unzipping Gzip..."
 	@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./configure
 	@cd imports/gzip-1.14/ && make -j 4
+	@cd imports && ../tools/gzip -dv cpio-latest.tar.gz && tar -xf cpio-latest.tar
 
 LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@echo "Compacting into a Lunpack..."
