@@ -6,8 +6,14 @@ KCONFIG_MCONF ?= kconfig-mconf
 KCONFIG_FILE = Kconfig
 # Other Vars
 CURRENT_PATH := $(CURDIR)
+
+#
+# Config Condidtions 
+#
+
 # Define a variable to hold extra, conditional targets.
 EXTRA_TARGETS :=
+OUTPUT_TARGET :=
 
 ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
 	EXTRA_TARGETS += HowlingInstall
@@ -25,17 +31,23 @@ ifeq ($(CONFIG_LIB_LUNTOOL_COMPILE), y)
 	EXTRA_TARGETS += LunTool
 endif
 
-ifeq ($(LTT_COMPILE_ENABLE), y)
+ifeq ($(CONFIG_LTT_COMPILE_ENABLE), y)
 	EXTRA_TARGETS += LTT
 endif
+
+ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
+	OUTPUT_TARGET += LUNPACK_COMPILE
+endif
+
 
 EXTRA_TARGETS += LunSystems
 
 # Default target: build the Rust project
-all: $(EXTRA_TARGETS)
+all: $(EXTRA_TARGETS) $(OUTPUT_TARGET)
 	@mkdir -p output/lib && mkdir -p output/bin
 	@echo "Cleaning up build files, and extra compile cache..."
 	@rm -rf output/lib/*.d
+	@echo "Done! All files have been copied to the 'output' folder"
 	
 # LunSystem Targets
 Howling:
@@ -68,13 +80,12 @@ menuconfig:
 
 # Target to clean up Cargo and Kconfig artifacts
 clean:
-	@cd LunSystems && cargo clean
 	@rm -f .config .config.old
 	@rm -rf output
-	@rm -rf src/lib/LunTool/target/
-	@rm -rf src/bin/LunSystems/target/
-	@rm -rf src/bin/HowlingInstall/target/
-	@rm -rf src/bin/Howling/target/
-	@rm -rf src/lib/Howling/target/
+	@cd src/lib/LunTool/ && cargo clean
+	@cd src/bin/LunSystems/ && cargo clean
+	@cd src/bin/HowlingInstall/ && cargo clean
+	@cd src/bin/Howling/ && cargo clean
+	@cd src/lib/Howling/ && cargo clean
 
 .PHONY: all clean menuconfig
