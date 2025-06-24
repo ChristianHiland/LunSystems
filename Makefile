@@ -15,6 +15,8 @@ CURRENT_PATH := $(CURDIR)
 EXTRA_TARGETS :=
 OUTPUT_TARGET :=
 
+EXTRA_TARGETS += output
+
 ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
 	EXTRA_TARGETS += HowlingInstall
 endif
@@ -42,9 +44,13 @@ endif
 
 EXTRA_TARGETS += LunSystems
 
+# Make folders
+output:
+	@mkdir -p output/lib && mkdir -p output/bin
+
 # Default target: build the Rust project
 all: $(EXTRA_TARGETS) $(OUTPUT_TARGET)
-	@mkdir -p output/lib && mkdir -p output/bin
+	
 	@echo "Cleaning up build files, and extra compile cache..."
 	@rm -rf output/lib/*.d
 	@echo "Done! All files have been copied to the 'output' folder"
