@@ -21,4 +21,11 @@ fn main() {
         .status()
         .expect("failed to execute process!");
     println!("process 'gzip' exited with: {}", status);
+
+    let status = Command::new("mv")
+        .arg("tools/LunSystems/")
+        .arg("../lunpack")
+        .status()
+        .expect("failed to execute process!");
+    println!("process 'mv' exited with: {}", status);
 }
