@@ -11,9 +11,10 @@ CURRENT_PATH := $(CURDIR)
 # Config Condidtions 
 #
 
-# Define a variable to hold extra, conditional targets.
+# Define a variable to hold extra, conditional targets, and targets.
 EXTRA_TARGETS :=
 OUTPUT_TARGET :=
+LUNPACK_DEPND :=
 
 ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
 	EXTRA_TARGETS += HowlingInstall
@@ -76,11 +77,29 @@ LTT:
 	@echo "Compiling LTT"
 	@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/bin/
 
-LUNPACK_COMPILE:
+
+# Lunpack Funcs
+
+
+
+DOWLOAD_IMPORTS:
+	@mkdir imports
+	@echo "[INFO] Downloading Gzip..."
+	@cd imports && wget -v https://ftp.gnu.org/gnu/gzip/gzip-1.14.zip
+UNPACK_IMPORTS:
+	@echo "[INFO] Unzipping Gzip..."
+	@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./confingure
+	@cd imports/gzip-1.14/ && make -j 4
+
+LUNPACK_DEPND += DOWLOAD_IMPORTS
+LUNPACK_DEPND += UNPACK_IMPORTS
+
+LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@echo "Compacting into a Lunpack..."
 	@find output/ -depth -print0 | cpio -ovc | gzip -c > final.cpio.gz
 	@mv final.cpio.gz final.lunpack
-	@mkdir -p output/lunpack/
+	@mkdir -p output/lunpack/tools/
+	@cp imports/gzip-1.14/gzip $(CURRENT_PATH)/output/lunpack/tools/
 	@mv final.lunpack output/lunpack/ && cd src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
 	@echo "Compacted into 'output/lunpack'"
 
@@ -99,5 +118,6 @@ clean:
 	@cd src/bin/Howling/ && cargo clean
 	@cd src/lib/Howling/ && cargo clean
 	@rm final.cpio.gz
+	@rm -rf output/lunpack
 
 .PHONY: all clean menuconfig
