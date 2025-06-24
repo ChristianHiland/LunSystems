@@ -12,7 +12,7 @@ CURRENT_PATH := $(CURDIR)
 #
 
 # Define a variable to hold extra, conditional targets, and targets.
-EXTRA_TARGETS :=
+EXTRA_TARGETS := PRE_INIT
 OUTPUT_TARGET :=
 LUNPACK_DEPND := DOWLOAD_IMPORTS UNPACK_IMPORTS
 
@@ -40,15 +40,18 @@ ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
 	OUTPUT_TARGET += LUNPACK_COMPILE
 endif
 
+PRE_INIT:
+	@mkdir -p output/lib && mkdir -p output/bin
 
 EXTRA_TARGETS += LunSystems
 # Default target: build the Rust project
 all: $(EXTRA_TARGETS) $(OUTPUT_TARGET)
-	@mkdir -p output/lib && mkdir -p output/bin
 	@echo "Cleaning up build files, and extra compile cache..."
 	@rm -rf output/lib/*.d
 	@echo "Done! All files have been copied to the 'output' folder"
 	
+
+
 # LunSystem Targets
 Howling:
 	@echo "Compiling Howling"
@@ -75,15 +78,13 @@ LTT:
 
 # Lunpack Funcs
 
-
-
 DOWLOAD_IMPORTS:
 	@mkdir imports
 	@echo "[INFO] Downloading Gzip..."
 	@cd imports && wget -v https://ftp.gnu.org/gnu/gzip/gzip-1.14.zip
 UNPACK_IMPORTS:
 	@echo "[INFO] Unzipping Gzip..."
-	@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./confingure
+	@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./configure
 	@cd imports/gzip-1.14/ && make -j 4
 
 LUNPACK_COMPILE: $(LUNPACK_DEPND)
