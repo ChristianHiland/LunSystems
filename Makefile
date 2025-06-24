@@ -73,7 +73,12 @@ LTT:
 	@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/bin/
 
 LUNPACK_COMPILE:
+	@echo "Compacting into a Lunpack..."
 	@find output/ -depth -print0 | cpio -ovc | gzip -c > final.cpio.gz
+	@mv final.cpio.gz final.lunpack
+	@mkdir -p output/lunpack/
+	@mv final.lunpack output/lunpack/ && cd src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
+	@echo "Compacted into 'output/lunpack'"
 
 # Target to run the configuration menu
 menuconfig:
@@ -89,5 +94,6 @@ clean:
 	@cd src/bin/HowlingInstall/ && cargo clean
 	@cd src/bin/Howling/ && cargo clean
 	@cd src/lib/Howling/ && cargo clean
+	@rm final.cpio.gz
 
 .PHONY: all clean menuconfig
