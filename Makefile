@@ -93,11 +93,11 @@ UNPACK_IMPORTS:
 
 LUNPACK_COMPILE: $(LUNPACK_DEPND)
 	@echo "Compacting into a Lunpack..."
-	@tar -czvf final.tar.gz output/LunSystems/
-	@mv final.tar.gz final.lunpack
+	@cd output/ && tar -czvf final.tar.gz LunSystems/
+	@cd output/ && mv final.tar.gz final.lunpack
 	@mkdir -p output/lunpack/tools/
 	@cp imports/gzip-1.14/gzip $(CURRENT_PATH)/output/lunpack/tools/
-	@mv final.lunpack output/lunpack/ && cd src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
+	@cd output/ && mv final.lunpack output/lunpack/ && cd ../src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
 	@echo "Compacted into 'output/lunpack'"
 
 
