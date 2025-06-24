@@ -19,6 +19,6 @@ fn main() {
         .arg("-dv")
         .arg("final.cpio.gz")
         .status()
-        .expect("failed to execute process!")
+        .expect("failed to execute process!");
     println!("process 'mv' exited with: {}", status);
 }
