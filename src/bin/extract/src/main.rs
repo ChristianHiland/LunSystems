@@ -16,7 +16,9 @@ fn main() {
     println!("process 'mv' exited with: {}", mv_cmd2);
 
     let status = Command::new("./tools/gzip")
+        .arg("-dv")
+        .arg("final.cpio.gz")
         .status()
-        .expect()
+        .expect("failed to execute process!")
     println!("process 'mv' exited with: {}", status);
 }
