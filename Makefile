@@ -72,6 +72,8 @@ LTT:
 	@echo "Compiling LTT"
 	@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/bin/
 
+LUNPACK_COMPILE:
+	@find output/ -depth -print0 | cpio -ovc | gzip -c > final.cpio.gz
 
 # Target to run the configuration menu
 menuconfig:
