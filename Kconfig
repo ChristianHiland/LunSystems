@@ -5,9 +5,13 @@ mainmenu "LunSystem Build Menu"
 config HOWLINGOS_ENABLE
     bool "Howling OS"
     default n
+    help
+        This enables the Howling code to be compiled
+        Note this is meant for ONLY HOWLING OS SYSTEMS.
 
 menu "Howling OS"
     depends on HOWLINGOS_ENABLE
+    
     config HOWLING_INSTALL_COMPILE
         bool "Howling Install"
         default n
