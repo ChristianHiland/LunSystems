@@ -3,15 +3,13 @@ LunSystems is a group of projects made by me (Christian). LunSystems is a automa
 
 LunSystems contains projects like:
 
-Software (Windows, Linux)
+Software & Libraries (Windows, Linux)
 - LunSystems
 - Extract
 - LTT
+- LunTool.dll
 
-Libraries (Windows, Linux)
-- LunTool
-
-Howling OS Software:
-- libHowling
+Howling OS Software & Libraries:
 - Howling
 - HowlingInstall
+- libHowling.so
