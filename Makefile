@@ -85,7 +85,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
 	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_HOWLING_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
-	@cd src/bin/Howling && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_WINDOWS_BIN)
+	@cd src/bin/Howling && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_WINDOWS_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
 	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_LINUX_BIN)
@@ -98,7 +98,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
 	@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_LINUX_LIB)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
-	@cd src/lib/LunTool && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
+	@cd src/lib/LunTool && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
 	@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
@@ -111,7 +111,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
 	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_LINUX_LIB)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
-	@cd src/lib/Howling && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
+	@cd src/lib/Howling && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
 	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
@@ -123,7 +123,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
 	@cd src/bin/LunSystems && cargo build && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_LINUX_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
-	@cd src/bin/LunSystems && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_WINDOWS_BIN)
+	@cd src/bin/LunSystems && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_WINDOWS_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
 	@cd src/bin/LunSystems && cargo build && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_HOWLING_BIN)
@@ -135,7 +135,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
 	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_LINUX_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
-	@cd src/bin/HowlingInstall && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_WINDOWS_BIN)
+	@cd src/bin/HowlingInstall && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_WINDOWS_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
 	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_HOWLING_BIN)
