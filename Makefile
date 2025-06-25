@@ -56,6 +56,10 @@ else
 endif
 
 # LunSystem Targets
+folders:
+ifeq ($(CONFIG_HOWLINGOS_ENABLE), y)
+	@mkdir -p output/LunSystems/HowlingOS/
+endif
 Howling:
 ifeq ($(CONFIG_HOWLING_COMPILE), y)
 	@echo "Compiling Howling"
