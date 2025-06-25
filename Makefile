@@ -17,10 +17,11 @@ CURRENT_PATH := $(CURDIR)
 #
 
 # Define a variable to hold extra, conditional targets, and targets.
-EXTRA_TARGETS := folders needs Howling LunTool LibHowling LunSystems HowlingInstall LTT
+NEEDS := needs
+EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT
 
 # Default target: make -j 4
-all: $(EXTRA_TARGETS)
+all: $(NEEDS) $(EXTRA_TARGETS)
 ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
 # Cleaning up compiled project...
 	@echo "Cleaning up build files, and any compile time made files..."
@@ -71,6 +72,7 @@ F_LINUX_LIB := "output/LunSystems/lib/linux"
 needs:
 	@rustup target add x86_64-pc-windows-gnu
 	@rustup target add aarch64-unknown-linux-gnu
+	@sudo apt-get install mingw-w64
 folders:
 	@mkdir -p output/bin && mkdir -p output/lib
 	@mkdir -p $(F_LINUX_BIN) && mkdir -p $(F_WINDOWS_BIN) && mkdir -p $(F_HOWLING_BIN)
