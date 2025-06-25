@@ -17,31 +17,31 @@ OUTPUT_TARGET :=
 
 # Default target: make -j 4
 all:
-	ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
+ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
 # Download Imports
-		@mkdir imports
-		@echo "Downloading software for Lunpack..."
-		@sleep 3
-		@echo "[INFO] Downloading Gzip..."
-		@cd imports && wget -v https://ftp.gnu.org/gnu/gzip/gzip-1.14.zip
-		@echo "[INFO] Downloading Cpio..."
-		@cd imports && wget -v https://ftp.gnu.org/gnu/cpio/cpio-latest.tar.gz
+	@mkdir imports
+	@echo "Downloading software for Lunpack..."
+	@sleep 3
+	@echo "[INFO] Downloading Gzip..."
+	@cd imports && wget -v https://ftp.gnu.org/gnu/gzip/gzip-1.14.zip
+	@echo "[INFO] Downloading Cpio..."
+	@cd imports && wget -v https://ftp.gnu.org/gnu/cpio/cpio-latest.tar.gz
 # Unpack imports
-		@echo "[INFO] Unzipping Gzip..."
-		@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./configure
-		@cd imports/gzip-1.14/ && make -j 4
-		@cd imports && gzip -dv cpio-latest.tar.gz && tar -xf cpio-latest.tar && cd cpio-2.15 && ./configure
-		@cd imports/cpio-2.15/ && make -j 4
+	@echo "[INFO] Unzipping Gzip..."
+	@cd imports && unzip gzip-1.14.zip && cd gzip-1.14 && ./configure
+	@cd imports/gzip-1.14/ && make -j 4
+	@cd imports && gzip -dv cpio-latest.tar.gz && tar -xf cpio-latest.tar && cd cpio-2.15 && ./configure
+	@cd imports/cpio-2.15/ && make -j 4
 # Compacking and copying into the output/lunpack
-		@echo "Compacting into a Lunpack..."
-		@cd output/ && tar -czvf final.tar.gz LunSystems/
-		@cd output/ && mv final.tar.gz final.lunpack
+	@echo "Compacting into a Lunpack..."
+	@cd output/ && tar -czvf final.tar.gz LunSystems/
+	@cd output/ && mv final.tar.gz final.lunpack
 # Copying gzip into the Lunpack/tools folder
-		@mkdir -p output/lunpack/tools/
-		@cp imports/gzip-1.14/gzip $(CURRENT_PATH)/output/lunpack/tools/
-		@cd output/ && mv final.lunpack lunpack/ && cd ../src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
-		@echo "Compacted into 'output/lunpack'"
-	endif
+	@mkdir -p output/lunpack/tools/
+	@cp imports/gzip-1.14/gzip $(CURRENT_PATH)/output/lunpack/tools/
+	@cd output/ && mv final.lunpack lunpack/ && cd ../src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
+	@echo "Compacted into 'output/lunpack'"
+endif
 
 	@echo "cleaning up build files, and any compile time made files..."
 	@sleep 3
