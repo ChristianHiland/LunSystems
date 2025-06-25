@@ -72,7 +72,7 @@ needs:
 	@rustup target add x86_64-pc-windows-msvc
 	@rustup target add aarch64-unknown-linux-gnu
 folders:
-	@mkdir -p output/bin && @mkdir -p output/lib
+	@mkdir -p output/bin && mkdir -p output/lib
 	@mkdir -p $(F_LINUX_BIN) && mkdir -p $(F_WINDOWS_BIN) && mkdir -p $(F_HOWLING_BIN)
 	@mkdir -p $(F_LINUX_LIB) && mkdir -p $(F_WINDOWS_LIB) && mkdir -p $(F_HOWLING_LIB)
 ifeq ($(CONFIG_HOWLINGOS_ENABLE), y)
