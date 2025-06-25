@@ -103,7 +103,6 @@ clean:
 	@cd src/bin/HowlingInstall/ && cargo clean
 	@cd src/bin/Howling/ && cargo clean
 	@cd src/lib/Howling/ && cargo clean
-	@rm final.cpio.gz
 	@rm -rf output/lunpack
 
 .PHONY: all clean menuconfig
