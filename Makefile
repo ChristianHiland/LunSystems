@@ -1,19 +1,23 @@
 -include .config
 
+# Vars
+
+# Kconfig
+
 # The Kconfig tool for the menu interface.
 KCONFIG_MCONF ?= kconfig-mconf
 # THe Kconfig file
 KCONFIG_FILE = Kconfig
+
 # Other Vars
 CURRENT_PATH := $(CURDIR)
 
 #
-# Config Condidtions 
+# Config Conditions 
 #
 
 # Define a variable to hold extra, conditional targets, and targets.
 EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT
-OUTPUT_TARGET :=
 
 # Default target: make -j 4
 all: $(EXTRA_TARGETS)
