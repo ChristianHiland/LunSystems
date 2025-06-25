@@ -12,7 +12,7 @@ CURRENT_PATH := $(CURDIR)
 #
 
 # Define a variable to hold extra, conditional targets, and targets.
-EXTRA_TARGETS := Howling LunTool LibHowling LunSystems HowlingInstall LTT
+EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT
 OUTPUT_TARGET :=
 
 # Default target: make -j 4
@@ -63,7 +63,7 @@ endif
 Howling:
 ifeq ($(CONFIG_HOWLING_COMPILE), y)
 	@echo "Compiling Howling"
-	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/output/LunSystems/bin/
+	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/output/LunSystems/HowlingOS/
 endif
 LunTool:
 ifeq ($(CONFIG_LIB_LUNTOOL_COMPILE), y)
@@ -73,7 +73,7 @@ endif
 LibHowling:
 ifeq ($(CONFIG_LIB_HOWLING_COMPILE), y)
 	@echo "Compiling Howling (Libary)"
-	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/output/LunSystems/lib/
+	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/output/LunSystems/HowlingOS/
 endif
 LunSystems:
 	@echo "Compiling LunSystems"
