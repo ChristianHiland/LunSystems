@@ -59,4 +59,22 @@ menu "Target Options"
         default n
         help
             This after compling the selected assets will package them into a LunPack Asset.
+
+    config COMPILE_TARGET_WINDOWS
+        bool "Compile For Windows"
+        default n
+        help
+            This compiles the selected software and libraries for Windows
+    
+    config COMPILE_TARGET_LINUX
+        bool "Compile For Linux"
+        default y
+        help
+            This compiles the selected software and libraries for Linux
+
+    config COMPILE_TARGET_HOWLING
+        bool "Compile For HowlingOS"
+        default n
+        help
+            This compiles the selected software and libraries for Linux
 endmenu

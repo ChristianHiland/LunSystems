@@ -59,38 +59,95 @@ else
 	@echo "Done!"
 endif
 
+# Folder Vars
+F_HOWLING_BIN := "output/LunSystems/bin/howling"
+F_HOWLING_LIB := "output/LunSystems/lib/howling"
+F_WINDOWS_BIN := "output/LunSystems/bin/windows"
+F_WINDOWS_LIB := "output/LunSystems/lib/windows"
+F_LINUX_BIN := "output/LunSystems/bin/linux"
+F_LINUX_LIB := "output/LunSystems/lib/linux"
+
 # LunSystem Targets
+needs:
+	@rustup target add x86_64-pc-windows-msvc
+	@rustup target add aarch64-unknown-linux-gnu
 folders:
+# Making Output Folders & Target OS Folders
 	@mkdir -p output/bin && @mkdir -p output/lib
+	@mkdir -p $(F_LINUX_BIN) && mkdir -p $(F_WINDOWS_BIN) && mkdir -p $(F_HOWLING_BIN)
+	@mkdir -p $(F_LINUX_LIB) && mkdir -p $(F_WINDOWS_LIB) && mkdir -p $(F_HOWLING_LIB)
 ifeq ($(CONFIG_HOWLINGOS_ENABLE), y)
 	@mkdir -p output/LunSystems/HowlingOS/
 endif
 Howling:
 ifeq ($(CONFIG_HOWLING_COMPILE), y)
 	@echo "Compiling Howling"
-	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/output/LunSystems/HowlingOS/
+ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
+	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_HOWLING_BIN)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
+	@cd src/bin/Howling && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_WINDOWS_BIN)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
+	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_LINUX_BIN)
+endif
 endif
 LunTool:
 ifeq ($(CONFIG_LIB_LUNTOOL_COMPILE), y)
 	@echo "Compiling LunTool (Libary)"
-	@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/output/LunSystems/lib/
+ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
+	@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_LINUX_LIB)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
+	@cd src/lib/LunTool && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
+	@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
+endif
 endif
 LibHowling:
 ifeq ($(CONFIG_LIB_HOWLING_COMPILE), y)
 	@echo "Compiling Howling (Libary)"
-	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/output/LunSystems/HowlingOS/
+ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
+	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_LINUX_LIB)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
+	@cd src/lib/Howling && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
+	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
+endif
 endif
 LunSystems:
 	@echo "Compiling LunSystems"
-	@cd src/bin/LunSystems && cargo build && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/output/LunSystems/bin/
+ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
+	@cd src/bin/LunSystems && cargo build && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_LINUX_BIN)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
+	@cd src/bin/LunSystems && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_WINDOWS_BIN)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
+	@cd src/bin/LunSystems && cargo build && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_HOWLING_BIN)
+endif
 HowlingInstall:
 ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
 	@echo "Compiling Howling Install"
-	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/output/LunSystems/bin/
+ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
+	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_LINUX_BIN)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
+	@cd src/bin/HowlingInstall && cargo build --target x86_64-pc-windows-msvc && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_WINDOWS_BIN)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
+	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_HOWLING_BIN)
+endif
 endif
 LTT:
 ifeq ($(CONFIG_LTT_COMPILE_ENABLE), y)
 	@echo "Compiling LTT"
+ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
+	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_LINUX_BIN)
+endif
 	@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/LunSystems/bin/
 endif
 
