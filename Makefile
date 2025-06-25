@@ -16,8 +16,12 @@ EXTRA_TARGETS := Howling LunTool LibHowling LunSystems HowlingInstall LTT
 OUTPUT_TARGET :=
 
 # Default target: make -j 4
-all:
+all: $(EXTRA_TARGETS)
 ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
+# Cleaning up compiled project...
+	@echo "Cleaning up build files, and any compile time made files..."
+	@sleep 3
+	@rm -rf output/LunSystems/lib/*.d
 # Download Imports
 	@mkdir imports
 	@echo "Downloading software for Lunpack..."
@@ -39,48 +43,51 @@ ifeq ($(CONFIG_COMPILE_INTO_LUNPACK), y)
 # Copying gzip into the Lunpack/tools folder
 	@mkdir -p output/lunpack/tools/
 	@cp imports/gzip-1.14/gzip $(CURRENT_PATH)/output/lunpack/tools/
-	@cd output/ && mv final.lunpack lunpack/ && cd ../src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
-	@echo "Compacted into 'output/lunpack'"
+	@cd output/ && mv final.lunpack lunpack/
+	@cd src/bin/extract/ && cargo build && cp $(CURRENT_PATH)/src/bin/extract/target/debug/extract $(CURRENT_PATH)/output/lunpack/
+	@echo "All files have been copied to the 'output/lunpack/' folder"
+else
+# Leave all files in the output folder without any Lunpack folder.
+	@echo "Cleaning up build files, and any compile time made files..."
+	@sleep 3
+	@rm -rf output/LunSystems/lib/*.d
+	@echo "All files have been copied to the 'output/' folder."
+	@echo "Done!"
 endif
 
 	@echo "cleaning up build files, and any compile time made files..."
 	@sleep 3
 	@rm -rf output/LunSystems/lib/*.d
-	@echo "All files have been copied to 'output' folder."
-	@echo "Done!"
-
 
 # LunSystem Targets
 Howling:
-	ifeq ($(CONFIG_HOWLING_COMPILE), y)
-		@echo "Compiling Howling"
-		@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/output/LunSystems/bin/
-	endif
+ifeq ($(CONFIG_HOWLING_COMPILE), y)
+	@echo "Compiling Howling"
+	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/output/LunSystems/bin/
+endif
 LunTool:
-	ifeq ($(CONFIG_LIB_LUNTOOL_COMPILE), y)
-		@echo "Compiling LunTool (Libary)"
-		@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/output/LunSystems/lib/
-	endif
-
+ifeq ($(CONFIG_LIB_LUNTOOL_COMPILE), y)
+	@echo "Compiling LunTool (Libary)"
+	@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/output/LunSystems/lib/
+endif
 LibHowling:
-	ifeq ($(CONFIG_LIB_HOWLING_COMPILE), y)
-		@echo "Compiling Howling (Libary)"
-		@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/output/LunSystems/lib/
-	endif
+ifeq ($(CONFIG_LIB_HOWLING_COMPILE), y)
+	@echo "Compiling Howling (Libary)"
+	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/output/LunSystems/lib/
+endif
 LunSystems:
 	@echo "Compiling LunSystems"
 	@cd src/bin/LunSystems && cargo build && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/output/LunSystems/bin/
-
 HowlingInstall:
-	ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
-		@echo "Compiling Howling Install"
-		@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/output/LunSystems/bin/
-	endif
+ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
+	@echo "Compiling Howling Install"
+	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/output/LunSystems/bin/
+endif
 LTT:
-	ifeq ($(CONFIG_LTT_COMPILE_ENABLE), y)
-		@echo "Compiling LTT"
-		@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/LunSystems/bin/
-	endif
+ifeq ($(CONFIG_LTT_COMPILE_ENABLE), y)
+	@echo "Compiling LTT"
+	@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/LunSystems/bin/
+endif
 
 # Target to run the configuration menu
 menuconfig:
