@@ -57,6 +57,7 @@ endif
 
 # LunSystem Targets
 folders:
+	@mkdir -p output/bin && @mkdir -p output/lib
 ifeq ($(CONFIG_HOWLINGOS_ENABLE), y)
 	@mkdir -p output/LunSystems/HowlingOS/
 endif
