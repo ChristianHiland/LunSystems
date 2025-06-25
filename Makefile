@@ -55,10 +55,6 @@ else
 	@echo "Done!"
 endif
 
-	@echo "cleaning up build files, and any compile time made files..."
-	@sleep 3
-	@rm -rf output/LunSystems/lib/*.d
-
 # LunSystem Targets
 Howling:
 ifeq ($(CONFIG_HOWLING_COMPILE), y)
