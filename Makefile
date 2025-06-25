@@ -17,7 +17,7 @@ CURRENT_PATH := $(CURDIR)
 #
 
 # Define a variable to hold extra, conditional targets, and targets.
-EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT
+EXTRA_TARGETS := folders needs Howling LunTool LibHowling LunSystems HowlingInstall LTT
 
 # Default target: make -j 4
 all: $(EXTRA_TARGETS)
