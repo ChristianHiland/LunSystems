@@ -25,6 +25,28 @@ menu "Howling OS"
         help
             This enables the Howling code to be compiled
             Note this is meant for ONLY HOWLING OS SYSTEMS.
+
+    config CONFIG_COMPILE_TARGET_HOWLING_RECOVERY
+        bool "Compile Howling OS Recovery Image"
+        default n
+        help
+            This compiles a image that HowlingOS can use for recovery.
+
+    config LUNPACKAGE_ENABLE
+        bool "Make a LunPackage for installing software, and libs"
+        default n
+        help
+            This allows the user to make a bundle for installing many different types of software and libs for Howling OS.
+    
+    menu "Select Packages For LunPackage"
+        depends on LUNPACKAGE_ENABLE
+
+        config PY_SPACEINFO_COMPILE
+            bool "SpaceInfo"
+            default n
+            help
+                Service for checking for low space.
+    endmenu
 endmenu
 
 # Sub Menu For LunSystem Software.

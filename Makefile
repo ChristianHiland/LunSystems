@@ -1,3 +1,4 @@
+export
 -include .config
 
 # Vars
@@ -18,7 +19,12 @@ CURRENT_PATH := $(CURDIR)
 
 # Define a variable to hold extra, conditional targets, and targets.
 NEEDS := needs
-EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT
+EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT HOWLINGRECOVERY
+
+ifeq ($(CONFIG_LUNPACKAGE_ENABLE), y)
+	EXTRA_TARGETS := LUNPACKAGE
+endif
+
 
 # Default target: make -j 4
 all: $(NEEDS) $(EXTRA_TARGETS)
@@ -90,7 +96,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
 	@cd src/bin/Howling && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_WINDOWS_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
-	@cd src/bin/Howling && cargo build && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_LINUX_BIN)
+	@cd src/bin/Howling && cargo build --target x86_64-unknown-linux-gnu && cp $(CURRENT_PATH)/src/bin/Howling/target/debug/Howling $(CURRENT_PATH)/$(F_LINUX_BIN)
 endif
 endif
 LunTool:
@@ -103,7 +109,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
 	@cd src/lib/LunTool && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
-	@cd src/lib/LunTool && cargo build && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
+	@cd src/lib/LunTool && cargo build --target x86_64-unknown-linux-gnu && cp $(CURRENT_PATH)/src/lib/LunTool/target/debug/libLunTool.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
 endif
 endif
 LibHowling:
@@ -116,7 +122,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
 	@cd src/lib/Howling && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_WINDOWS_LIB)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
-	@cd src/lib/Howling && cargo build && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
+	@cd src/lib/Howling && cargo build --target x86_64-unknown-linux-gnu && cp $(CURRENT_PATH)/src/lib/Howling/target/debug/libHowling.* $(CURRENT_PATH)/$(F_HOWLING_LIB)
 endif
 endif
 LunSystems:
@@ -128,7 +134,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
 	@cd src/bin/LunSystems && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_WINDOWS_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
-	@cd src/bin/LunSystems && cargo build && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_HOWLING_BIN)
+	@cd src/bin/LunSystems && cargo build --target x86_64-unknown-linux-gnu && cp $(CURRENT_PATH)/src/bin/LunSystems/target/debug/LunSystems $(CURRENT_PATH)/$(F_HOWLING_BIN)
 endif
 HowlingInstall:
 ifeq ($(CONFIG_HOWLING_INSTALL_COMPILE), y)
@@ -140,7 +146,7 @@ ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
 	@cd src/bin/HowlingInstall && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_WINDOWS_BIN)
 endif
 ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
-	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_HOWLING_BIN)
+	@cd src/bin/HowlingInstall && cargo build --target x86_64-unknown-linux-gnu && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_HOWLING_BIN)
 endif
 endif
 LTT:
@@ -149,7 +155,24 @@ ifeq ($(CONFIG_LTT_COMPILE_ENABLE), y)
 ifeq ($(CONFIG_COMPILE_TARGET_LINUX), y)
 	@cd src/bin/HowlingInstall && cargo build && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_LINUX_BIN)
 endif
-	@cd src/bin/LTT && cargo build && cp $(CURRENT_PATH)/src/bin/LTT/target/debug/LTT $(CURRENT_PATH)/output/LunSystems/bin/
+ifeq ($(CONFIG_COMPILE_TARGET_WINDOWS), y)
+	@cd src/bin/HowlingInstall && cargo build --target x86_64-pc-windows-gnu && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_WINDOWS_BIN)
+endif
+ifeq ($(CONFIG_COMPILE_TARGET_HOWLING), y)
+	@cd src/bin/HowlingInstall && cargo build --target x86_64-unknown-linux-gnu && cp $(CURRENT_PATH)/src/bin/HowlingInstall/target/debug/HowlingInstall $(CURRENT_PATH)/$(F_HOWLING_BIN)
+endif
+endif
+HOWLINGRECOVERY:
+	@echo "Making Howling Recovery image..."
+	@sleep 3
+ifeq ($(CONFIG_COMPILE_TARGET_HOWLING_RECOVERY), y)
+	@echo "Done! Howling Recover Image Has been made!"
+endif
+LUNPACKAGE:
+	@echo "Compiling Software and Libraries for HowlingOS Packages..."
+	@sleep 4
+ifeq ($(CONFIG_PY_SPACEINFO_COMPILE), y)
+	@echo "Adding SpaceInfo..."
 endif
 
 # Target to run the configuration menu
