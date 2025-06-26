@@ -19,11 +19,7 @@ CURRENT_PATH := $(CURDIR)
 
 # Define a variable to hold extra, conditional targets, and targets.
 NEEDS := needs
-EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT HOWLINGRECOVERY
-
-ifeq ($(CONFIG_LUNPACKAGE_ENABLE), y)
-	EXTRA_TARGETS := LUNPACKAGE
-endif
+EXTRA_TARGETS := folders Howling LunTool LibHowling LunSystems HowlingInstall LTT HOWLINGRECOVERY LUNPACKAGE
 
 
 # Default target: make -j 4
@@ -169,10 +165,12 @@ ifeq ($(CONFIG_COMPILE_TARGET_HOWLING_RECOVERY), y)
 	@echo "Done! Howling Recover Image Has been made!"
 endif
 LUNPACKAGE:
+ifeq ($(CONFIG_LUNPACKAGE_ENABLE), y)
 	@echo "Compiling Software and Libraries for HowlingOS Packages..."
 	@sleep 4
 ifeq ($(CONFIG_PY_SPACEINFO_COMPILE), y)
 	@echo "Adding SpaceInfo..."
+endif
 endif
 
 # Target to run the configuration menu
